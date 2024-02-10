@@ -85,6 +85,9 @@ if __name__ == '__main__':
     df.show()
 
     #Data Cleaning & 2.Convert the Date and Time columns into a timestamp column named Timestamp.
+    #Assumptions Taken :
+    #2.1 Dropping rows if any column is having null values
+        
     print('2.Convert the Date and Time columns into a timestamp column named Timestamp.')
     df = df.select('Date','Time','Latitude','Longitude','Type','Depth','Magnitude') \
     .na.drop('any') \
@@ -111,7 +114,11 @@ if __name__ == '__main__':
 
     print('5.Implement a UDF to categorize the earthquakes into levels (e.g., Low, Moderate, High) based on their magnitudes.')
 
-    #magnitudeCategarizeUDF = udf(lambda x:categorizeEarthquakes(x),StringType())  
+    #Assumptions Taken :
+    #5.1 If Magnitude of earthquake is <= 5.8 then I've marked it as 'Low'
+    #5.2 If Magnitude > 5.8 and <= 6.9, I've marked it as 'Moderate'
+    #5.3 If Magnitude > 6.9, I've marked it as 'High'
+        
     df = df.withColumn('earthquake_level',categorizeEarthquakes(col('Magnitude')))
     df.show()
 
@@ -124,6 +131,11 @@ if __name__ == '__main__':
 
     #7.Visualize the geographical distribution of earthquakes on a world map using appropriate libraries (e.g., Basemap or Folium).
 
+    #Assumptions Taken :
+    #5.1 If Magnitude of earthquake is <= 5.8 then I've marked the color in the map as 'blue'
+    #5.2 If Magnitude > 5.8 and <= 6.9, I've marked the color in the map as 'yellow'
+    #5.3 If Magnitude > 6.9, I've marked the color in the map as 'red'
+        
     create_map(df)
 
     #8.Please include the final csv in the repository.
