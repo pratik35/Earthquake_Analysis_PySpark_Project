@@ -1,6 +1,7 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
+from pyspark.sql.window import Window
 from math import *
 import folium
 import argparse
@@ -106,9 +107,12 @@ if __name__ == '__main__':
 
     #4.Calculate the average depth and magnitude of earthquakes for each earthquake type.
     print('4.Calculate the average depth and magnitude of earthquakes for each earthquake type.')
-    df.groupBy('Type') \
-        .agg(avg('Depth').alias('avg_depth'),avg('Magnitude').alias('avg_magnitude')) \
-        .show()
+    spec = Window.partitionBy('Type')
+
+    df = df.withColumn('avg_depth',round(avg('Depth').over(spec),3)) \
+      .withColumn('avg_magnitude',round(avg('Magnitude').over(spec),3)) 
+    
+    df.show()
 
     #5.Implement a UDF to categorize the earthquakes into levels (e.g., Low, Moderate, High) based on their magnitudes.
 
@@ -126,7 +130,7 @@ if __name__ == '__main__':
 
     print('6.Calculate the distance of each earthquake from a reference location (e.g., (0, 0)).')
 
-    df = df.withColumn('distance_of_earthquake_kms',distance(col('Latitude'), lit(0), col('Longitude'), lit(0)))
+    df = df.withColumn('distance_of_earthquake_kms',round(distance(col('Latitude'), lit(0), col('Longitude'), lit(0)),3))
     df.show()
 
     #7.Visualize the geographical distribution of earthquakes on a world map using appropriate libraries (e.g., Basemap or Folium).
