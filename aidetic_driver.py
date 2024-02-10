@@ -132,9 +132,9 @@ if __name__ == '__main__':
     #7.Visualize the geographical distribution of earthquakes on a world map using appropriate libraries (e.g., Basemap or Folium).
 
     #Assumptions Taken :
-    #5.1 If Magnitude of earthquake is <= 5.8 then I've marked the color in the map as 'blue'
-    #5.2 If Magnitude > 5.8 and <= 6.9, I've marked the color in the map as 'yellow'
-    #5.3 If Magnitude > 6.9, I've marked the color in the map as 'red'
+    #7.1 If Magnitude of earthquake is <= 5.8 then I've marked the color in the map as 'blue'
+    #7.2 If Magnitude > 5.8 and <= 6.9, I've marked the color in the map as 'yellow'
+    #7.3 If Magnitude > 6.9, I've marked the color in the map as 'red'
         
     create_map(df)
 
