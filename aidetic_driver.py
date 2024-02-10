@@ -54,9 +54,6 @@ def distance(lat1, lat2, lon1, lon2):
     r = 6371
     return(c * r)
 
-def plotDot(latitude,longitude,map,marker_color):
-        folium.CircleMarker(location=[latitude, longitude],radius=2,weight=5).add_to(map)
-
 def create_map(df):
     map = folium.Map(prefer_canvas=True)
 
